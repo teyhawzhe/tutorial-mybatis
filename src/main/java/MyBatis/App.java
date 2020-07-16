@@ -2,7 +2,9 @@ package myBatis;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -30,20 +32,70 @@ public class App {
 			
 			
 			for(PersonProfile index : personProfileList) {
-				System.out.println("代號:"+index.getPersonId());
-				System.out.println("姓名:"+index.getName());
-				System.out.println("性別:"+index.getGender());
-				System.out.println("生日:"+index.getBirth());
-				System.out.println("郵政區號:"+index.getPostCode());
-				System.out.println("地址:"+index.getAddress());
-				System.out.println("電話:"+index.getTel());
-				System.out.println("EMAIL:"+index.getEmail());
+				System.out.println(index.toString());
 			}
+			
+			System.out.println("------------------------------");
 			
 			PersonProfile personProfile = (PersonProfile) session.selectOne("personProfile.getById", 1);
 			
-			System.out.println("personProfile:"+personProfile.toString());
+			System.out.println("personProfile:\n"+personProfile.toString());
 			
+			PersonProfile liqingzhao = new PersonProfile();
+			liqingzhao.setName("李清照");
+			liqingzhao.setGender("2");
+			liqingzhao.setEmail("liqingzhao@email.com");
+			liqingzhao.setPostCode("370100");
+			liqingzhao.setBirth("10840313");
+			liqingzhao.setAddress("山東省濟南市");
+			liqingzhao.setTel("0912345678");
+			
+			int delResult = session.delete("personProfile.deleteByName", "李清照");
+			System.out.println("delete result " + delResult);
+			
+			int insResult = session.insert("personProfile.insert",liqingzhao);
+			System.out.println("insert result " + insResult);
+			
+			Map<String,String> parameter = new HashMap<>();
+			parameter.put("gender", "2");
+			parameter.put("name", "李白");
+			int upResult = session.update("personProfile.updateGenderByName", parameter);
+			System.out.println("update result " + upResult);
+			
+			session.commit();
+			
+			List<Map<String,Object>> map = session.selectList("personProfile.getAllMap");
+			
+			for(Map<String,Object> index : map) {
+				System.out.println("***************************************");
+				System.out.println(index.get("PERSON_ID"));
+				System.out.println(index.get("NAME"));
+				System.out.println(index.get("BIRTH"));
+				System.out.println(index.get("GENDER"));
+				System.out.println(index.get("POST_CODE"));
+				System.out.println(index.get("ADDRESS"));
+				System.out.println(index.get("TEL"));
+				System.out.println(index.get("EMAIL"));
+				System.out.println("***************************************");
+			}
+			
+	 
+			parameter.put("gender", "2");
+			parameter.put("name", "李白");
+		
+			map = session.selectList("personProfile.getAllMapByMap" , parameter);
+			for(Map<String,Object> index : map) {
+				System.out.println("1***************************************");
+				System.out.println(index.get("PERSON_ID"));
+				System.out.println(index.get("NAME"));
+				System.out.println(index.get("BIRTH"));
+				System.out.println(index.get("GENDER"));
+				System.out.println(index.get("POST_CODE"));
+				System.out.println(index.get("ADDRESS"));
+				System.out.println(index.get("TEL"));
+				System.out.println(index.get("EMAIL"));
+				System.out.println("1***************************************");
+			}
 			session.close();
 		}
 		

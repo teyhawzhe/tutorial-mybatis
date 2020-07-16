@@ -14,12 +14,43 @@
     	<result property="email" column="EMAIL"/>
     	<result property="tel" column="TEL"/>
     </resultMap>
+    
   	<select id="getAll" resultMap="result">
   		SELECT * FROM PERSON_PROFILE;
   	</select>
   
-  	<select id="getById" resultType="personProfile">
-  		SELECT * FROM PERSON_PROFILE;
+  	<select id="getById" resultMap="result">
+  		SELECT * FROM PERSON_PROFILE WHERE PERSON_ID = #{personId};
   	</select>
   
+  	<select id="getAllMap" resultType="MAP">
+  		SELECT * FROM PERSON_PROFILE;
+  	</select>
+  	
+  	<select id="getAllMapByMap" resultType="MAP" parameterType="Map">
+  		SELECT * FROM PERSON_PROFILE
+  		<where>
+  			<if test="personid != null">
+  				PERSON_ID = #{personId}
+  			</if>
+  			<if test="name != null">
+  				NAME = #{name}
+  			</if>
+  			
+  		</where>
+  	</select>
+  
+  	<insert id="insert" parameterType="personProfile">
+  		INSERT INTO PERSON_PROFILE (NAME,GENDER,ADDRESS,POST_CODE,EMAIL,TEL,BIRTH) 
+  		VALUES ( #{name} , #{gender} , #{address} , #{postCode} , #{email} , #{tel} , #{birth} );
+  	</insert>
+  	
+  	<delete id="deleteByName" parameterType="String">
+  		DELETE PERSON_PROFILE WHERE NAME = #{name};
+  	</delete>
+  	
+  	<update id="updateGenderByName" parameterType="Map">
+  		UPDATE PERSON_PROFILE SET GENDER = #{gender} WHERE  NAME = #{name};
+  	</update>
+  	
   </mapper>
