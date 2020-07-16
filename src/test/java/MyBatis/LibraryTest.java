@@ -4,6 +4,9 @@
 package MyBatis;
 
 import org.junit.Test;
+
+import myBatis.Library;
+
 import static org.junit.Assert.*;
 
 public class LibraryTest {

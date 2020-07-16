@@ -26,4 +26,10 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    
+    //myBatis 
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.5.5'
+    
+    compile group: 'com.h2database', name: 'h2', version: '1.4.200'
+    
 }
