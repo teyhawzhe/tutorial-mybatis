@@ -10,13 +10,19 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import model.PersonProfile;
 
 public class App {
 
+	private static Logger log = LoggerFactory.getLogger(App.class);
+	
 	public static void main(String[] args) throws IOException {
 	
+		log.debug("logging");
+		
 		System.out.println("starting");
 		String resource = "myBatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
@@ -24,9 +30,9 @@ public class App {
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		
 		try(SqlSession session = sqlSessionFactory.openSession()){
-			System.out.println("session");
+			log.debug("session");
 			
-			List<PersonProfile> personProfileList = session.selectList("personProfile.getAll");
+			/*List<PersonProfile> personProfileList = session.selectList("personProfile.getAll");
 			
 			System.out.println("personProfileList size = " + personProfileList.size());
 			
@@ -56,11 +62,17 @@ public class App {
 			int insResult = session.insert("personProfile.insert",liqingzhao);
 			System.out.println("insert result " + insResult);
 			
-			Map<String,String> parameter = new HashMap<>();
+			Map<String,Object> parameter = new HashMap<>();
 			parameter.put("gender", "2");
 			parameter.put("name", "李白");
 			int upResult = session.update("personProfile.updateGenderByName", parameter);
 			System.out.println("update result " + upResult);
+			
+			
+			parameter.put("gender", "1");
+			parameter.put("personId", 1);
+			int upResult1 = session.update("personProfile.update", parameter);
+			System.out.println("update1 result " + upResult1);
 			
 			session.commit();
 			
@@ -95,7 +107,12 @@ public class App {
 				System.out.println(index.get("TEL"));
 				System.out.println(index.get("EMAIL"));
 				System.out.println("1***************************************");
-			}
+			}*/
+			
+			
+			
+			
+			
 			session.close();
 		}
 		

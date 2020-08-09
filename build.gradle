@@ -32,4 +32,9 @@ dependencies {
     
     compile group: 'com.h2database', name: 'h2', version: '1.4.200'
     
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    
+    
 }

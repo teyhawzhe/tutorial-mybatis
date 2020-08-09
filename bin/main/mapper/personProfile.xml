@@ -36,7 +36,6 @@
   			<if test="name != null">
   				NAME = #{name}
   			</if>
-  			
   		</where>
   	</select>
   
@@ -51,6 +50,22 @@
   	
   	<update id="updateGenderByName" parameterType="Map">
   		UPDATE PERSON_PROFILE SET GENDER = #{gender} WHERE  NAME = #{name};
+  	</update>
+  	
+  	<update id="update" parameterType="Map">
+  		UPDATE PERSON_PROFILE
+  		<trim prefix="SET" suffixOverrides="," >
+  			<if test="name != null">
+  				NAME = #{name} ,
+  			</if>
+  			<if test="gender != null">
+  				GENDER = #{gender} ,
+  			</if>
+  			<if test="birth != null">
+  				BIRTH = #{birth} ,
+  			</if>
+  		</trim>
+  		WHERE PERSON_ID = #{personId}
   	</update>
   	
   </mapper>
